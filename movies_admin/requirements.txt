@@ -1,0 +1,4 @@
+django==3.2
+flake8==4.0  # Разумеется, вам потребуется линтер :)
+python-dotenv==0.21.1
+django-split-settings==1.2.0

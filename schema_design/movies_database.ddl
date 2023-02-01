@@ -1,4 +1,7 @@
+-- Схема 'content'
 CREATE SCHEMA content;
+
+-- Таблица 'Кинопроизведения'
 CREATE TABLE IF NOT EXISTS content.film_work (
 	id uuid PRIMARY KEY,
 	title TEXT NOT NULL,
@@ -9,6 +12,7 @@ CREATE TABLE IF NOT EXISTS content.film_work (
 	created timestamp with time zone,
 	modified timestamp with time zone);
 
+-- Таблица 'Жанры'
 CREATE TABLE IF NOT EXISTS content.genre (
 	id uuid PRIMARY KEY,
 	name TEXT NOT NULL,
@@ -16,11 +20,14 @@ CREATE TABLE IF NOT EXISTS content.genre (
 	created timestamp with time zone,
 	modified timestamp with time zone);
 
+-- 'Персонажи'
 CREATE TABLE IF NOT EXISTS content.person (
 	id uuid PRIMARY KEY,
 	full_name TEXT NOT NULL,
 	created timestamp with time zone,
 	modified timestamp with time zone);
+
+-- 'Персонажи фильма'
 CREATE TABLE IF NOT EXISTS content.person_film_work (
 	id uuid PRIMARY KEY,
 	person_id uuid REFERENCES content.person (id),
@@ -28,6 +35,7 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
 	role TEXT NOT NULL,
 	created timestamp with time zone);
 
+-- 'Жанры фильма'
 CREATE TABLE IF NOT EXISTS content.genre_film_work (
 	id uuid PRIMARY KEY,
 	genre_id uuid REFERENCES content.genre (id),

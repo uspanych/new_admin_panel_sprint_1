@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-31 14:21+0500\n"
+"POT-Creation-Date: 2023-02-01 18:13+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,14 +44,18 @@ msgstr "Название"
 msgid "creation_date"
 msgstr "Дата создания"
 
-#: .\movies\models.py:51
+#: .\movies\models.py:52
 msgid "rating"
 msgstr "Рейтинг"
 
-#: .\movies\models.py:52
+#: .\movies\models.py:56
 msgid "type"
 msgstr "Тип"
 
-#: .\movies\models.py:78
+#: .\movies\models.py:57
+msgid "file"
+msgstr "Файл"
+
+#: .\movies\models.py:83
 msgid "role"
 msgstr "Роль"

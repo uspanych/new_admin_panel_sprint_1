@@ -54,6 +54,7 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
     type = models.TextField(_('type'))
+    file_path = models.FileField(_('file'), blank=True, null=True, upload_to='movies/')
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
     persons = models.ManyToManyField(Person, through='PersonFilmwork')
 
@@ -67,9 +68,9 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
 
 
 class GenreFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE,)
+    genre = models.ForeignKey('Genre', on_delete=models.CASCADE,)
+    created = models.DateTimeField(auto_now_add=True,)
 
     class Meta:
         db_table = "content\".\"genre_film_work"
@@ -77,8 +78,8 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-    person = models.ForeignKey('Person', on_delete=models.CASCADE)
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE,)
+    person = models.ForeignKey('Person', on_delete=models.CASCADE,)
     role = models.TextField(_('role'), null=True)
     created = models.DateTimeField(auto_now_add=True)
 

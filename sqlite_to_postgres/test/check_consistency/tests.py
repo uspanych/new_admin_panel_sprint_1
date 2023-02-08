@@ -1,20 +1,30 @@
-from contextlib import closing
-import psycopg2
-from psycopg2.extras import DictCursor
+import os
 import sqlite3
-from sqlite_to_postgres.load_data import load_from_sqlite
+from contextlib import closing
 from datetime import datetime
 
+import psycopg2
+import pytest
+from dotenv import load_dotenv
+from psycopg2.extras import DictCursor
 
-def test_integrity():
+from sqlite_to_postgres.load_data import load_from_sqlite
+
+
+@pytest.fixture()
+def load_env():
+    load_dotenv()
+
+
+def test_integrity(load_env):
     """Проверка целостности данных."""
 
     dsl = {
-        'dbname': 'movies_database',
-        'user': 'app',
-        'password': '123qwe',
-        'host': '127.0.0.1',
-        'port': 5433
+        'dbname': os.environ.get('DBNAME'),
+        'user': os.environ.get('USER'),
+        'password': os.environ.get('PASSWORD'),
+        'host': os.environ.get('HOST'),
+        'port': os.environ.get('PORT')
     }
     db_name = 'db.sqlite'
 
@@ -41,15 +51,15 @@ def test_integrity():
                 assert count_rows_pg == count_rows_sl
 
 
-def test_data():
+def test_data(load_env):
     """Тест проверяет содержимое всех таблиц."""
 
     dsl = {
-        'dbname': 'movies_database',
-        'user': 'app',
-        'password': '123qwe',
-        'host': '127.0.0.1',
-        'port': 5433
+        'dbname': os.environ.get('DBNAME'),
+        'user': os.environ.get('USER'),
+        'password': os.environ.get('PASSWORD'),
+        'host': os.environ.get('HOST'),
+        'port': os.environ.get('PORT')
     }
     db_name = 'db.sqlite'
 

@@ -23,8 +23,6 @@
 - DB_USER - Пользователь БД
 - DB_PASSWORD - Пароль от пользователя БД
 - SECRET_KEY - Секретный ключ django
-- ALLOWED_HOST_LOCAL - Адрес локального хоста, для которого может работать текущий сайт
-- INTERNAL_IP_LOCAL - Адрес для доступа к Debug
 - DEBUG - Переменная отвечает за режим отладки (True/False)
 - DB_PORT - Порт БД
 

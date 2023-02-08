@@ -13,7 +13,7 @@ class TimeStampedMixin(models.Model):
 
 
 class UUIDMixin(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4,)
 
     class Meta:
         abstract = True
@@ -25,8 +25,8 @@ class Genre(UUIDMixin, TimeStampedMixin):
 
     class Meta:
         db_table = "content\".\"genre"
-        verbose_name = 'Жанр'
-        verbose_name_plural = 'Жанры'
+        verbose_name = _('genre')
+        verbose_name_plural = _('genres')
 
     def __str__(self):
         return self.name
@@ -37,14 +37,19 @@ class Person(UUIDMixin, TimeStampedMixin):
 
     class Meta:
         db_table = "content\".\"person"
-        verbose_name = 'Актёра'
-        verbose_name_plural = 'Актёры'
+        verbose_name = _('actor')
+        verbose_name_plural = _('actors')
 
     def __str__(self):
         return self.full_name
 
 
 class Filmwork(UUIDMixin, TimeStampedMixin):
+    class _FilmType(models.TextChoices):
+        MOVIE = 'movie', _('movie')
+        TV_SHOW = 'tv_show', _('tv_show')
+        __empty__ = _('(unknown)')
+
     title = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
     creation_date = models.DateField(_('creation_date'), blank=True)
@@ -53,15 +58,20 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         blank=True,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
-    type = models.TextField(_('type'))
+    type = models.CharField(
+        _('type'),
+        max_length=15,
+        choices=_FilmType.choices,
+        default=_FilmType.MOVIE,
+    )
     file_path = models.FileField(_('file'), blank=True, null=True, upload_to='movies/')
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
     persons = models.ManyToManyField(Person, through='PersonFilmwork')
 
     class Meta:
         db_table = "content\".\"film_work"
-        verbose_name = 'Кинопроизведение'
-        verbose_name_plural = 'Кинопроизведения'
+        verbose_name = _('filmwork')
+        verbose_name_plural = _('filmworks')
 
     def __str__(self):
         return self.title
@@ -74,7 +84,9 @@ class GenreFilmwork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"genre_film_work"
-        verbose_name_plural = 'Жанры фильма'
+        verbose_name = _('film genre')
+        verbose_name_plural = _('film genres')
+        unique_together = [['film_work', 'genre']]
 
 
 class PersonFilmwork(UUIDMixin):
@@ -85,4 +97,6 @@ class PersonFilmwork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"person_film_work"
-        verbose_name_plural = 'Актёры фильма'
+        verbose_name = _('film person')
+        verbose_name_plural = _('film persons')
+        unique_together = [['film_work', 'person', 'role']]

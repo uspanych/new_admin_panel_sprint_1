@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunSQL(
             sql="""
-            CREATE SCHEMA content;
+            CREATE SCHEMA IF NOT EXISTS content;
             """
         ),
         migrations.CreateModel(
